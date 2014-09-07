@@ -23,7 +23,7 @@ function ajaxCall(req,resp) {
 
 function search() {
     var newUrl = "http://www.expedia.com.sg/Hotel-Search#destination=" +
-        encodeURIComponent($("#autocomplete").val()); 
+        encodeURIComponent($("#autocomplete").val()) + "&startDate=" + encodeURIComponent($("#startDate").val()) + "&endDate=" + encodeURIComponent($("#endDate").val()); 
     window.location.replace(newUrl);
 }
 
@@ -34,12 +34,37 @@ $(document).ready(function(){
             minLength:3 
         });
 });
+
+$(function() {
+    $( "#startDate" ).datepicker({
+      dateFormat: "dd/mm/yy",
+      defaultDate: "+1w",
+      changeMonth: true,
+      numberOfMonths: 2,
+      onClose: function( selectedDate ) {
+        $( "#startDate" ).datepicker( "option", "minDate", selectedDate );
+      }
+    });
+    $( "#endDate" ).datepicker({
+      dateFormat: "dd/mm/yy",
+      defaultDate: "+1w",
+      changeMonth: true,
+      numberOfMonths: 2,
+      onClose: function( selectedDate ) {
+        $( "#endDate" ).datepicker( "option", "maxDate", selectedDate );
+      }
+    });
+  });
 </script>
 </head>
 
 <body>
     <label for="autocomplete">Where do you want to go? </label>
     <input id="autocomplete">
+    <label for="startDate">from</label>
+    <input type="text" id="startDate" name="from">
+    <label for="endDate">to</label>
+    <input type="text" id="endDate" name="to">
     <a href="#" id="search">search</a> 
 </body>
 </html> 
